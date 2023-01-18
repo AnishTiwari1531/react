@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
-import './App.css';
-import Header from './components/Header';
+import '../styles/ShowContacts.css'
+import Header from './Header';
+import { Link } from 'react-router-dom';
 
-class App extends Component {
+class ShowContacts extends Component {
 
   // let contacts = [{
   //   id: 1,
@@ -22,12 +23,28 @@ class App extends Component {
   // let x = 1;
   // let y = 2;
 
-  constructor() {
-    super();
-    this.state = {
-      contactsListToShow: []
-    }
+  // constructor() {
+  //   super();
+  //   this.state = {
+  //     contactsListToShow: []
+  //   }
+  // }
+
+  // componentDidMount() {
+  //   let newContact = {
+  //     id: 1,
+  //     name: "Anish",
+  //     phone: "9898989898"
+  //   }
+  //   let contactsList = this.state.contactsListToShow;
+  //   contactsList.push(newContact);
+  //   this.setState({ contactsListToShow: contactsList });
+  // }
+
+  onDeletedClick = (contactId) => {
+    this.props.deleteContactHandler(contactId);
   }
+
   render() {
     return (
 
@@ -67,7 +84,7 @@ class App extends Component {
         <Header heading="Phone Directory" />
 
         <div className='component-body-container'>
-          <button className='custom-btn add-btn'>Add</button>
+          <Link to="/add"><button className='custom-btn add-btn'>Add</button></Link>
 
           <div className='grid-container heading-container'>
             <span className='grid-item name-heading'>Name</span>
@@ -86,13 +103,14 @@ class App extends Component {
 
           {
             // contacts.map(sub => {
-            this.state.contactsListToShow.map(sub => {
+            // this.state.contactsListToShow.map(sub => {
+            this.props.addContactList.map(sub => {
               return <div key={sub.id} className='grid-container'>
                 <span className='grid-item'>{sub.name}</span>
                 <span className='grid-item'>{sub.phone}</span>
                 <span className='grid-item action-btn-container'>
                   {/* <button className='custom-btn delete-btn' onClick={deleteHandler.bind(this, 'You clicked delete.')}>Delete</button> */}
-                  <button className='custom-btn delete-btn'>Delete</button>
+                  <button className='custom-btn delete-btn' onClick={this.onDeletedClick.bind(this, sub.id)}>Delete</button>
                 </span>
               </div>
             })
@@ -104,5 +122,4 @@ class App extends Component {
   }
 }
 
-
-export default App;
+export default ShowContacts;
